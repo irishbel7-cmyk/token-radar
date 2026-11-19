@@ -15,8 +15,10 @@ import type { BoardRow, Snapshot } from './lib/model.ts';
 import { buildDossier } from './vendor/makefun-board.ts';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const input = process.env.INPUT_SNAPSHOT ?? resolve(here, '..', 'input', 'snapshot.json');
-const out = resolve(process.env.OUTPUT_DIR ?? join(here, 'out'));
+const graderInputRoot = process.env.MAKEFUN_INPUT_DIR ?? join(process.env.MAKEFUN_BOT_DIR ?? dirname(here), '..', 'input');
+const graderOutputRoot = process.env.MAKEFUN_OUTPUT_DIR ?? process.env.OUTPUT_DIR ?? join(here, 'out');
+const input = process.env.INPUT_SNAPSHOT ?? join(graderInputRoot, 'snapshot.json');
+const out = resolve(graderOutputRoot);
 const TEXT_MAX_BYTES = 65_536;
 const SCREENSHOT_CAPS = { max: 8, max_bytes: 512 * 1024 };
 const IMAGE_NAME = /^[A-Za-z0-9_][A-Za-z0-9._-]{0,127}$/;
